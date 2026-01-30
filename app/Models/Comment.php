@@ -4,9 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function Pest\Laravel\post;
 
 class Comment extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'body',
+        'post_id'
+    ];
+
+    public function posts(){
+        return $this->belongsTo(Post::class);
+    }
 }

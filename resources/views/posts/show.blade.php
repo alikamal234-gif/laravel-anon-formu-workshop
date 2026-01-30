@@ -26,36 +26,38 @@
         <!-- Post Content -->
         <article class="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mb-8">
             <h1 class="text-3xl font-semibold text-gray-900 mb-4">
-                <!-- POST_TITLE -->
+                {{ $post->title }}
             </h1>
             <div class="text-sm text-gray-500 mb-6">
-                <!-- POST_CREATED_AT -->
+                {{ $post->created_at }}
             </div>
             <div class="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                <!-- POST_BODY -->
+                {{ $post->body }}
             </div>
         </article>
 
         <!-- Comments Section -->
         <section class="mb-8">
             <h2 class="text-2xl font-semibold text-gray-900 mb-6">Comments</h2>
-            
+                @foreach ($post->comments as $comment)
+                    
+                
             <!-- Comments List -->
             <div class="space-y-4 mb-8">
                 <!-- COMMENT_START -->
                 <div class="bg-white rounded-lg border border-gray-200 p-5">
                     <p class="text-gray-700 mb-3 whitespace-pre-wrap">
-                        <!-- COMMENT_BODY -->
+                        {{ $comment->body }}
                     </p>
                     <div class="text-xs text-gray-500">
-                        <!-- COMMENT_CREATED_AT -->
+                        {{ $comment->created_at }}
                     </div>
                 </div>
                 <!-- COMMENT_END -->
 
                 <!-- REPEAT_COMMENT_FOR_EACH_COMMENT -->
             </div>
-
+            @endforeach
             <!-- Empty Comments State -->
             <div class="bg-white rounded-lg border border-gray-200 p-6 text-center text-gray-500">
                 <p>No comments yet. Be the first to comment!</p>
@@ -66,8 +68,9 @@
         <!-- Leave a Comment Form -->
         <section class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
             <h3 class="text-xl font-semibold text-gray-900 mb-6">Leave a Comment</h3>
-            <form action="<!-- FORM_ACTION_TO_STORE_COMMENT -->" method="POST">
+            <form action="{{ route('comments.store') }}" method="POST">
                 <!-- CSRF_TOKEN -->
+                @csrf
                 <div class="mb-6">
                     <label for="body" class="block text-sm font-medium text-gray-700 mb-2">
                         Your Comment
@@ -80,6 +83,7 @@
                         placeholder="Share your thoughts..."
                         required
                     ></textarea>
+                    <input type="hidden" name="post_id" value="{{ $post->id }}">
                 </div>
                 <button 
                     type="submit" 

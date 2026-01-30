@@ -27,8 +27,9 @@
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
             <h1 class="text-3xl font-semibold text-gray-900 mb-8">Create New Post</h1>
             
-            <form action="<!-- FORM_ACTION_TO_STORE_POST -->" method="POST">
+            <form action="{{ route('posts.store') }}" method="POST">
                 <!-- CSRF_TOKEN -->
+                @csrf
                 
                 <!-- Title Input -->
                 <div class="mb-6">
@@ -69,7 +70,7 @@
                         Submit Post
                     </button>
                     <a 
-                        href="<!-- LINK_TO_POSTS_INDEX -->" 
+                        href="{{ route('posts.index') }}" 
                         class="text-gray-600 hover:text-gray-900 transition-colors"
                     >
                         Cancel

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use function Pest\Laravel\post;
 
 class CommentController extends Controller
 {
@@ -26,9 +28,16 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,Post $post)
     {
-        //
+       
+        $data = $request->validate([
+            'body' => 'required|string',
+            'post_id' => 'required'
+        ]);
+        $data['likes'] = 0;
+        Comment::create($data);
+        return redirect()->back();
     }
 
     /**
